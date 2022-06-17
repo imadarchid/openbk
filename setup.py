@@ -7,4 +7,5 @@ setup(
     description='A python library to easily extract information and metrics from Moroccan bank statements.',
     author='Imad Archid',
     license='MIT',
+    install_requires=['tabula-py', 'pandas'],
 )
