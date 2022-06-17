@@ -26,7 +26,6 @@ def get_merchants(transactions):
 
     # Payment transactions
     ops = [cats['ecom_national'], cats['ecom_inter'], cats['card_pay']]
-    # print(ops)
 
     for index, row in transactions.iterrows():
         if any(o in row['transaction'] for o in ops):

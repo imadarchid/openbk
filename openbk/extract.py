@@ -1,9 +1,9 @@
 import pandas as pd
 import tabula
 
-from statement.transactions import analyze_spending, analyze_revenue, get_merchants
+# from statement.transactions import analyze_spending, analyze_revenue, get_merchants
 
-banks = ['Attijari', 'CAM', 'CIH']
+# banks = ['Attijari', 'CAM', 'CIH']
 
 def extract(file):
 
@@ -51,8 +51,8 @@ def extract(file):
 
     return [beg_balance, end_balance, transactions]
 
-def test():
-    bb, eb, t = extract('../July.pdf')
-    get_merchants(t)
+# def test():
+#     bb, eb, t = extract('../July.pdf')
+#     get_merchants(t)
 
-test()
+# test()
