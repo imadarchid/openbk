@@ -41,7 +41,7 @@ def extract(file):
         end_balance = -float(transactions.iloc[-1].debit)
     else:
         end_balance = float(transactions.iloc[-1].credit)
-    
+
     transactions = transactions[transactions.date != 'TOTAL']
     transactions = transactions[transactions.date != 'SOLDE']
     transactions = transactions[:-1]
