@@ -1,7 +1,7 @@
 import pandas as pd
 import tabula
 
-from statement.transactions import analyze_spending, analyze_revenue
+from statement.transactions import analyze_spending, analyze_revenue, get_merchants
 
 banks = ['Attijari', 'CAM', 'CIH']
 
@@ -53,6 +53,6 @@ def extract(file):
 
 def test():
     bb, eb, t = extract('../July.pdf')
-    analyze_revenue(t)
+    get_merchants(t)
 
 test()
