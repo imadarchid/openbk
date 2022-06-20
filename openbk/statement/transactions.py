@@ -33,4 +33,4 @@ def get_merchants(transactions):
             merchant = splits[2]
             transactions.at[index, 'merchant'] = merchant
 
-    print(transactions)
+    return transactions
