@@ -1,9 +1,16 @@
-Extracting data from a statement
+Reading a Statement
 =====
+
+.. _chars:
+
+PDF Statement characteristics
+------------
+
+Testing this page.
 
 .. _extracting:
 
-How to extract transactions from a PDF statement?
+Extraction
 ------------
 
 Testing this page.
