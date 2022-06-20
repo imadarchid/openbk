@@ -1,5 +1,5 @@
 Welcome to openbk's documentation!
-===================================
+==================================
 
 **openbk** is a small python library that can be used to read and extract transaction information from Moroccan bank statements (PDF).
 
