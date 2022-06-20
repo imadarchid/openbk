@@ -23,3 +23,5 @@ Contents
 
    usage
    extraction
+   flows
+   transactions
