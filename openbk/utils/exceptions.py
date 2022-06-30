@@ -3,3 +3,6 @@ class FileReadException(Exception):
 
 class DataExtractionException(Exception):
     pass
+
+class NoTransactionsException(Exception):
+    pass

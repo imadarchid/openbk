@@ -1,9 +1,10 @@
+from typing import List
 import pandas as pd
 import tabula
 
 from utils.exceptions import FileReadException, DataExtractionException
 
-def extract(file):
+def extract(file) -> List:
 
     df = tabula.read_pdf(file, stream=True, pages='all', pandas_options={'header': None}, area=(290, 10, 700, 577))
 
