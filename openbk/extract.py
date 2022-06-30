@@ -1,9 +1,12 @@
+from typing import List
 import pandas as pd
 import tabula
+from statement.flows import net_movements,debits
 
+from statement.transactions import analyze_spending, analyze_revenue, get_merchants
 from utils.exceptions import FileReadException, DataExtractionException
 
-def extract(file):
+def extract(file) -> List:
 
     df = tabula.read_pdf(file, stream=True, pages='all', pandas_options={'header': None}, area=(290, 10, 700, 577))
 
