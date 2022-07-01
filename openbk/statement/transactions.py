@@ -4,7 +4,7 @@ import pandas as pd
 from utils import categories
 from utils.exceptions import NoTransactionsException
 
-cats = categories.transaction_categories_cih
+cats = categories.cih
 
 # Analyzing categories of spending
 def analyze_spending(transactions):

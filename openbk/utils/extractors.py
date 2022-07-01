@@ -1,6 +1,6 @@
-from typing import List
 import pandas as pd
 import tabula
+import re
 
 from utils.exceptions import FileReadException, DataExtractionException
 
@@ -76,6 +76,21 @@ def attijari(file):
     transactions['debit'].astype(float)
     transactions['credit'].astype(float)
 
-    # Add support for beg balance and end balance
+    # Add support for beg balance
+    beg_box = data[0].values[0][1]
+    amount = re.findall(r"^(\d{1,3}(?: \d{3})*\,\d{2})", beg_box)
+    amount = amount[0].replace(" ", "")
+    amount = amount.replace(",", ".")
 
-    return transactions
+    if "CREDITEUR" in beg_box:
+        beg_balance = amount
+    elif "DEBITEUR" in beg_box:
+        beg_balance = -amount
+    else:
+        raise ValueError()
+
+    # Add support for end balance
+
+    end_balance = 0
+
+    return [beg_balance, end_balance, transactions]
