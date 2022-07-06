@@ -1,60 +1,42 @@
+import PyPDF2
+import re
+
+from utils.exceptions import NoBankDetected
+from utils.extractors import awb, cih
 from typing import List
-import pandas as pd
-import tabula
 
-from utils.exceptions import FileReadException, DataExtractionException
+# For now, we are using ICEs since they are truly unique identifiers
+bank_ids = [
+    {"name": "CIH", "id":"001542240000068"},
+    {"name": "AWB", "id":"001648789000071"},
+]
 
-def extract(file) -> List:
+def extract(file, bank = None) -> List:
+    if not bank:
+        bank = detect_bank(file)
 
-    df = tabula.read_pdf(file, stream=True, pages='all', pandas_options={'header': None}, area=(290, 10, 700, 577))
+    match bank:
+        case 'CIH':
+            result = cih(file)
+        case 'AWB':
+            result = awb(file)
 
-    print(f'Detected {len(df)} pages...')
+    result.append(bank)
 
-    # All transactions
-    transactions = []
+    return result
 
-    for pn, p in enumerate(df):
-        try:
-            print(f'Processing page {pn + 1} of {len(df)}....')
-            statement = p
-            if len(statement.columns) > 3:
-                statement.drop(1, inplace=True, axis=1)
-            statement.columns = ["transaction", "debit", "credit"]
-            statement[["date", "transaction"]] = statement["transaction"].str.split(' ', expand=True, n=1)
+def detect_bank(file):
+    doc = open(file, 'rb')
+    doc_data = PyPDF2.PdfFileReader(doc)
+    first_page = doc_data.getPage(0)
 
-            transactions.append(statement)
-        except:
-            raise FileReadException('It appears that you did not upload a valid PDF Statement')
+    all_text = first_page.extract_text()
+    for b in bank_ids:
+        result = re.search(b["id"], all_text)
+        if result:
+            bank = b["name"]
+            break
 
-
-    try:
-        transactions = pd.concat(transactions, ignore_index=True)
-        transactions = transactions[transactions.transaction.notnull()]
-        transactions = transactions[transactions.date != 'PAGE']
-        transactions = transactions[transactions.date != 'REPORT']
-        transactions.date = transactions['date'].str[:5]
-        transactions = transactions.replace(",", ".", regex=True)
-        transactions['debit'] = transactions['debit'].replace(" ", "", regex=True)
-        transactions['credit'] = transactions['credit'].replace(" ", "", regex=True)
-
-        if pd.isna(transactions.iloc[0].credit):
-            beg_balance = -float(transactions.iloc[0].debit)
-        else:
-            beg_balance = float(transactions.iloc[0].credit)
-
-        if pd.isna(transactions.iloc[-1].credit):
-            end_balance = -float(transactions.iloc[-1].debit)
-        else:
-            end_balance = float(transactions.iloc[-1].credit)
-
-        transactions = transactions[transactions.date != 'TOTAL']
-        transactions = transactions[transactions.date != 'SOLDE']
-        transactions = transactions[:-1]
-
-        transactions['debit'].astype(float)
-        transactions['credit'].astype(float)
-
-    except Exception:
-        raise DataExtractionException('An issue occurred when analyzing your PDF statement')
-
-    return [beg_balance, end_balance, transactions]
+    if not bank:
+        raise NoBankDetected("Could not detect a bank or your bank is not supported by openbk")
+    return bank

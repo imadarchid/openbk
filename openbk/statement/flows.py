@@ -24,3 +24,8 @@ def net_movements(transactions):
     net_mov = credits(transactions) - debits(transactions)
 
     return net_mov
+
+def ending_balance(beg_balance, transactions):
+    delta = net_movements(transactions)
+
+    return beg_balance + delta
