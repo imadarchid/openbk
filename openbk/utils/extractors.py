@@ -1,6 +1,9 @@
+import re
+import json
+
 import pandas as pd
 import tabula
-import re
+import PyPDF2
 
 from utils.exceptions import FileReadException, DataExtractionException
 
@@ -57,13 +60,38 @@ def cih(file):
     except Exception:
         raise DataExtractionException('An issue occurred when analyzing your PDF statement')
 
-    return [beg_balance, end_balance, transactions]
+    return [beg_balance, transactions]
 
 def attijari(file):
-    data = tabula.read_pdf_with_template(file, template_path="templates/awb.json", pages='all', pandas_options={'header': None})
 
-    transactions = pd.concat([data[1], data[2], data[3], data[4]], axis=1, ignore_index=True)
+    coordinates = []
+
+    # Opening JSON file
+    template = open('templates/awb.json')
+    template_parsed = json.load(template)
+    for c in template_parsed:
+        coordinates.append([c['y1'], c['x1'], c['y2'], c['x2']])
+
+    doc = open(file, 'rb')
+    doc_data = PyPDF2.PdfFileReader(doc)
+    totalpages = doc_data.numPages
+
+    transactions = pd.DataFrame()
+
+    for i in range(totalpages):
+        # print(i)
+        if i < 1:
+            data = tabula.read_pdf(file, pages=[i+1], pandas_options={'header': None}, area=coordinates, stream=True)
+            beg_box = data[0].values[0][1]
+            temp_df = pd.concat([data[1], data[2], data[3], data[4]], axis=1, ignore_index=True)
+            transactions = pd.concat([transactions, temp_df], axis=1)
+        else:
+            data = tabula.read_pdf(file, pages=[i+1], pandas_options={'header': None}, area=coordinates, stream=True)
+            temp_df = pd.concat([data[0], data[1], data[2], data[3]], axis=1, ignore_index=True)
+            transactions = pd.concat([transactions, temp_df], axis=0)
+
     transactions.columns = ['transaction', 'date', 'debit', 'credit']
+    transactions = transactions.reset_index(drop=True)
 
     transactions = transactions[transactions.transaction.notna()]
     transactions = transactions[transactions.transaction != 'TOTAL MOUVEMENTS']
@@ -77,20 +105,15 @@ def attijari(file):
     transactions['credit'].astype(float)
 
     # Add support for beg balance
-    beg_box = data[0].values[0][1]
     amount = re.findall(r"^(\d{1,3}(?: \d{3})*\,\d{2})", beg_box)
     amount = amount[0].replace(" ", "")
     amount = amount.replace(",", ".")
 
     if "CREDITEUR" in beg_box:
-        beg_balance = amount
+        beg_balance = float(amount)
     elif "DEBITEUR" in beg_box:
-        beg_balance = -amount
+        beg_balance = float(-amount)
     else:
         raise ValueError()
 
-    # Add support for end balance
-
-    end_balance = 0
-
-    return [beg_balance, end_balance, transactions]
+    return [beg_balance, transactions]
