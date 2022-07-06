@@ -62,7 +62,7 @@ def cih(file):
 
     return [beg_balance, transactions]
 
-def attijari(file):
+def awb(file):
 
     coordinates = []
 

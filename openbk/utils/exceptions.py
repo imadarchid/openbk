@@ -6,3 +6,6 @@ class DataExtractionException(Exception):
 
 class NoTransactionsException(Exception):
     pass
+
+class NoBankDetected(Exception):
+    pass
