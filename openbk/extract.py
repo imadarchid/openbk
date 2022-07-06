@@ -5,6 +5,7 @@ from utils.exceptions import NoBankDetected
 from utils.extractors import awb, cih
 from typing import List
 
+# For now, we are using ICEs since they are truly unique identifiers
 bank_ids = [
     {"name": "CIH", "id":"001542240000068"},
     {"name": "AWB", "id":"001648789000071"},
@@ -19,6 +20,8 @@ def extract(file, bank = None) -> List:
             result = cih(file)
         case 'AWB':
             result = awb(file)
+
+    result.append(bank)
 
     return result
 

@@ -9,3 +9,6 @@ class NoTransactionsException(Exception):
 
 class NoBankDetected(Exception):
     pass
+
+class MethodNotSupported(Exception):
+    pass

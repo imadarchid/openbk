@@ -21,4 +21,12 @@ awb = {
     "invoice_pay": "PAIEMENT ",
     "card_pay": "PAIMENT/CB",
     "ext_gab_fee": "FRAIS/RETRAIT ESP GAB",
+    "ecom_national": "",
+    "ecom_inter": "",
+    "card_pay": ""
+}
+
+banks = {
+    'CIH': cih,
+    'AWB': awb
 }
