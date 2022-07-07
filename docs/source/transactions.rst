@@ -44,7 +44,7 @@ To get revenue categories, you can use the ``analyze_revenue(statement)`` method
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.transactions import analyze_revenue
+    from openbk.statement.transactions import analyze_revenue
 
     output = extract("path/to/your/file.pdf")
 
@@ -66,7 +66,7 @@ To get merchants (card payments), you can use the ``get_merchants(statement)`` m
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.transactions import get_merchants
+    from openbk.statement.transactions import get_merchants
 
     output = extract("path/to/your/file.pdf")
 

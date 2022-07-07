@@ -15,7 +15,7 @@ To get the sum of `debit` transactions, you can use the ``debits(statement)`` me
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.flows import debits
+    from openbk.statement.flows import debits
 
     output = extract("path/to/your/file.pdf")
 
@@ -37,7 +37,7 @@ To get the sum of `credit` transactions, you can use the ``credits(statement)`` 
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.flows import debits
+    from openbk.statement.flows import debits
 
     output = extract("path/to/your/file.pdf")
 
@@ -59,7 +59,7 @@ To get the sum of net movements, you can use the ``net_movements(statement)`` me
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.flows import net_movements
+    from openbk.statement.flows import net_movements
 
     output = extract("path/to/your/file.pdf")
 
@@ -79,7 +79,7 @@ To get the ending balance of a statement, you can use the ``ending_balance(state
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.flows import ending_balance
+    from openbk.statement.flows import ending_balance
 
     output = extract("path/to/your/file.pdf")
 
