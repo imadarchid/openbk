@@ -1,8 +1,8 @@
 import PyPDF2
 import re
 
-from utils.exceptions import NoBankDetected
-from utils.extractors import awb, cih
+from openbk.utils.exceptions import NoBankDetected
+from openbk.utils.extractors import cih, awb
 from typing import List
 
 # For now, we are using ICEs since they are truly unique identifiers

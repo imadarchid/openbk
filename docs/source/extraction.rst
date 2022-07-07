@@ -26,16 +26,17 @@ To extract data from a PDF statement:
 The output of the ``extract()`` method is a list that comprises the following:
 
 #. ``beg_balance``: Beginning balance of the month corresponding to that statement.
-#. ``end_balance``: Ending balance of the month corresponding to that statement.
 #. ``transactions``: Dataframe object with **transaction**, **debit**, **credit**, and **date** columns.
+#. ``bank``: A string referring to the detected/mentioned bank.
 
-You can find the explanation of each column below:
+
+You can find the explanation of each column below of the ``transactions`` object:
 
 * **transaction**: refers the transaction text (Libellé). It describes the operation.
 * **debit**: refers to the debited amount (expense) for transactions where applicable.
 * **credit**: refers to the credited amount (revenue) for transactions where applicable.
 * **date**: refers to the date of the transaction.
 
-**The `transactions` object [2] is also used for all subsequent methods**
+**The output of the ``extract()`` function is used in all subsequent methods**
 
 You can now discover more about how you can analyze :doc:`transactions` or how to get fund :doc:`flows` for a given bank statement.

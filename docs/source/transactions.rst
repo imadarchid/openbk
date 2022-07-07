@@ -17,7 +17,7 @@ Analyze Spending
 
 To get spending categories, you can use the ``analyze_spending(statement)`` method.
 
-- **statement**: a `statement` object is required. You can get this from running the extract function and selecting the third output.
+- **statement**: a `statement` parameter is required. You can get this from running the extract function.
 
 .. code-block:: python
 
@@ -27,7 +27,7 @@ To get spending categories, you can use the ``analyze_spending(statement)`` meth
     output = extract("path/to/your/file.pdf")
 
     # Selecting the statement dataframe
-    statement = output[2]
+    statement = output
     result = analyze_spending(statement)
 
     print(result) # Show the output
@@ -39,17 +39,17 @@ Analyze Revenue
 
 To get revenue categories, you can use the ``analyze_revenue(statement)`` method.
 
-- **statement**: a `statement` object is required. You can get this from running the extract function and selecting the third output.
+- **statement**: a `statement` parameter is required. You can get this from running the extract function.
 
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.transactions import analyze_revenue
+    from openbk.statement.transactions import analyze_revenue
 
     output = extract("path/to/your/file.pdf")
 
     # Selecting the statement dataframe
-    statement = output[2]
+    statement = output
     result = analyze_revenue(statement)
 
     print(result) # Show the output
@@ -61,17 +61,17 @@ Get Merchants
 
 To get merchants (card payments), you can use the ``get_merchants(statement)`` method.
 
-- **statement**: a `statement` object is required. You can get this from running the extract function and selecting the third output.
+- **statement**: a `statement` parameter is required. You can get this from running the extract function.
 
 .. code-block:: python
 
     from openbk.extract import extract
-    from openbk.transactions import get_merchants
+    from openbk.statement.transactions import get_merchants
 
     output = extract("path/to/your/file.pdf")
 
     # Selecting the statement dataframe
-    statement = output[2]
+    statement = output
     result = get_merchants(statement)
 
     print(result) # Show the output

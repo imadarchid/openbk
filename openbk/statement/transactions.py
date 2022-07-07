@@ -1,8 +1,8 @@
 import re
 import pandas as pd
 
-from utils import categories
-from utils.exceptions import NoTransactionsException, MethodNotSupported
+from openbk.utils import categories
+from openbk.utils.exceptions import NoTransactionsException, MethodNotSupported
 
 
 # Analyzing categories of spending

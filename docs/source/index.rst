@@ -6,7 +6,7 @@ Welcome to openbk's documentation!
 The library currently supports PDF statements from the following Moroccan banks:
 
 * ✅ CIH Bank (E-banking statements - Particuliers)
-* 🔜 Attijariwafa Bank (Coming Soon)
+* ✅ Attijariwafa Bank (E-banking statements - Particuliers)
 * 🔜 Banque Centrale Populaire (Coming Soon)
 
 Check out the :doc:`usage` section for further information, including

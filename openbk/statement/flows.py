@@ -1,8 +1,10 @@
 import pandas as pd
-from utils.exceptions import NoTransactionsException
 
+from openbk.utils.exceptions import NoTransactionsException
 
-def debits(transactions):
+def debits(data):
+    transactions = data[1]
+
     if not isinstance(transactions, pd.DataFrame) or transactions.empty:
         raise NoTransactionsException('Wrong format or empty statement')
 
@@ -11,7 +13,9 @@ def debits(transactions):
 
     return total_debit
 
-def credits(transactions):
+def credits(data):
+    transactions = data[1]
+
     if not isinstance(transactions, pd.DataFrame) or transactions.empty:
         raise NoTransactionsException('Wrong format or empty statement')
 
@@ -20,12 +24,16 @@ def credits(transactions):
 
     return total_credit
 
-def net_movements(transactions):
+def net_movements(data):
+    transactions = data[1]
+
     net_mov = credits(transactions) - debits(transactions)
 
     return net_mov
 
-def ending_balance(beg_balance, transactions):
+def ending_balance(beg_balance, data):
+    transactions = data[1]
+
     delta = net_movements(transactions)
 
     return beg_balance + delta
