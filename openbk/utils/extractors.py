@@ -1,3 +1,4 @@
+import os
 import re
 import json
 
@@ -5,7 +6,7 @@ import pandas as pd
 import tabula
 import PyPDF2
 
-from utils.exceptions import FileReadException, DataExtractionException
+from openbk.utils.exceptions import DataExtractionException, FileReadException
 
 def cih(file):
 
@@ -45,11 +46,6 @@ def cih(file):
         else:
             beg_balance = float(transactions.iloc[0].credit)
 
-        if pd.isna(transactions.iloc[-1].credit):
-            end_balance = -float(transactions.iloc[-1].debit)
-        else:
-            end_balance = float(transactions.iloc[-1].credit)
-
         transactions = transactions[transactions.date != 'TOTAL']
         transactions = transactions[transactions.date != 'SOLDE']
         transactions = transactions[:-1]
@@ -67,7 +63,9 @@ def awb(file):
     coordinates = []
 
     # Opening JSON file
-    template = open('templates/awb.json')
+
+    template_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'templates', 'awb.json'))
+    template = open(template_path)
     template_parsed = json.load(template)
     for c in template_parsed:
         coordinates.append([c['y1'], c['x1'], c['y2'], c['x2']])
@@ -79,7 +77,6 @@ def awb(file):
     transactions = pd.DataFrame()
 
     for i in range(totalpages):
-        # print(i)
         if i < 1:
             data = tabula.read_pdf(file, pages=[i+1], pandas_options={'header': None}, area=coordinates, stream=True)
             beg_box = data[0].values[0][1]

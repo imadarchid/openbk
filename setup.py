@@ -17,4 +17,6 @@ setup(
     url='https://github.com/imadarchid/openbk',
     install_requires=['tabula-py', 'pandas', 'PyPDF2'],
     python_requires='>=3.10',
+    include_package_data = True,
+    data_files=[('openbk', ['./openbk/templates/awb.json'])],
 )
