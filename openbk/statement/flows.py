@@ -1,6 +1,6 @@
 import pandas as pd
-from utils.exceptions import NoTransactionsException
 
+from openbk.utils.exceptions import NoTransactionsException
 
 def debits(data):
     transactions = data[1]
