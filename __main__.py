@@ -1,4 +1,3 @@
-from email.policy import default
 import PyPDF2
 import re
 import argparse
