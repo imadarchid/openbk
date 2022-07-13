@@ -25,3 +25,4 @@ Contents
    extraction
    flows
    transactions
+   cli

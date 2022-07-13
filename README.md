@@ -34,6 +34,8 @@ pip install openbk
 
 Learn more about how to use `openbk` on our [docs](https://openbk.readthedocs.io).
 
+openbk can also be run through [CLI commands](https://openbk.readthedocs.io).
+
 ## Motivation
 This project aims to simplify the task for developers who want to build apps that rely on the analysis of bank statements (Wallets, Lending, Consumer Behavior analysis, etc.). Ideally, openbk can help developers and data analysts in their financial scoring processes for applications in the Moroccan context.
 
