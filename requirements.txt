@@ -3,3 +3,5 @@ PyPDF2==2.5.0
 setuptools==57.4.0
 tabula==1.0.5
 tabula_py==2.4.0
+commitizen==2.28.0
+pre-commit==2.20.0
